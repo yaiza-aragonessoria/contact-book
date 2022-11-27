@@ -4,34 +4,63 @@ import Contact from "../Contact/contact";
 import "./contact-book.css";
 import "../../avatars/mario.png";
 import "../../avatars/toad.png";
+import AddContact from "../AddContact/add-contact";
 
 
 
 const ContactBook = () => {
     const [contactEntries, setContactEntries] = useState([{
-        id: 1,
-        name: "Toad",
-        avatar: "https://mario.wiki.gallery/images/5/50/SuperPaperToad.png",
+            id: 1,
+            name: "Toad",
+            avatar: "https://mario.wiki.gallery/images/5/50/SuperPaperToad.png",
+            address: "Anywhere in Mushroom Kingdom",
+            species: "toad",
+            favColor: "blue and yellow"
         }, {
             id: 2,
             name: "Mario",
             avatar: "https://mario.wiki.gallery/images/a/aa/SMW_Mario_V-sign_Artwork.png",
+            address: "Brooklyn, New York",
+            species: "human",
+            favColor: "red"
         }, {
             id: 3,
             name: "Yoshi",
             avatar: "https://mario.wiki.gallery/images/f/fc/SMW_Art_-_Yoshi.png",
+            address: "Yoshi's Island, Dinosaur Land",
+            species: "human",
+            favColor: "green"
+        },{
+            id: 4,
+            name: "Peach",
+            avatar: "https://mario.wiki.gallery/images/thumb/c/c8/Princess_Peach_PiT.png/300px-Princess_Peach_PiT.png",
+            address: "Peach's castle, Mushroom Kingdom",
+            species: "human",
+            favColor: "pink"
+        },{
+            id: 5,
+            name: "Donkey Kong",
+            avatar: "https://mario.wiki.gallery/images/2/23/Donkey_Kong_Lifting_Barrel.jpg",
+            address: "DK Island",
+            species: "kong",
+            favColor: "brown"
         }
+
         ]
     );
 
-    // const [contactEntries, setContactEntries] = useState([]);
     const [contactDetails, setContactDetails] = useState({
         id: 0,
-        title: "",
-        message: "",
-        image: "",
+        name: "",
+        avatar: "",
+        address: "",
+        species: "",
+        favColor: ""
       });
     const [isEditing, setIsEditing] = useState(false);
+    const [isAdding, setIsAdding]  = useState(false);
+    const [isInDetails, setIsInDetails]  = useState(false);
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -54,8 +83,9 @@ const ContactBook = () => {
                 })
             }
         
-        setContactDetails({id:0, name:"", avatar: ""});
+        setContactDetails({id:0, name:"", avatar: "",  address: "", species: "", favColor: ""});
         setIsEditing(false);
+        setIsAdding(!isAdding);
         
 
         }
@@ -76,56 +106,58 @@ const ContactBook = () => {
         });
     };
 
-    
-
     const handleDelete = toDeleteId => {
         setContactEntries(contactEntries.filter( (contact) => contact.id !== toDeleteId));
     }
 
-    const handleUpdate = (clickedId, name, avatar) => {
+    const handleUpdate = (clickedId, name, avatar, address, species, favColor) => {
         setContactDetails({
             id: clickedId,
             name,
             avatar,
+            address,
+            species,
+            favColor
         });
         setIsEditing(true);
+        setIsAdding(!isAdding);
     }
 
+    const handleAddButton = e => {
+        e.preventDefault();
+        
+        setIsAdding(!isAdding);
+        }
+
+    const handleIsInDetails = () => {
+        setIsInDetails(!isInDetails)
+    }
 
     return (
         <>
-        <h4>Add new contact</h4>
-        <form className="form" onSubmit={handleSubmit}>
-            <div className="input-container">
-                <label htmlFor="blog-message">Name:</label>
-                <input type="text" 
-                        id="contact-name" 
-                        name="name" 
-                        value={contactDetails.name}
-                        onChange={e => handleContactDetails(e)}>
-                </input>
-            </div>
-            <div className="input-container">
-                <label htmlFor="picture">Upload avatar</label>
-                <input
-                type="file"
-                name="avatar"
-                id="avatar"
-                onChange={e => handleUploadAvatar(e)}
-                />
-            </div>
-            <button type="submit">{isEditing ? "Save" : "Add"}</button>
-        </form>
-
+        <div className="add-container">
+            <button className="plus-button" onClick={e => handleAddButton(e)}></button>
+            {isAdding? 
+                <AddContact
+                {...contactDetails}
+                handleContactDetails={handleContactDetails}
+                handleSubmit={handleSubmit}
+                handleAddButton={handleAddButton}
+                handleUploadAvatar={handleUploadAvatar}
+                isEditing={isEditing}
+                /> : null}
+        </div>
         <div className="contacts-grid">
-        <h4>My contacts</h4>
             {
             contactEntries.map((contact) =>{
                 return(
                     <Contact key={contact.id} 
                             {...contact}
+                            handleContactDetails={handleContactDetails}
                             handleDelete={handleDelete}
                             handleUpdate={handleUpdate}
+                            isInDetails={isInDetails}
+                            handleIsInDetails={handleIsInDetails}
                     />
                 );
             })

@@ -1,0 +1,23 @@
+.contact-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-container {
+    border-radius: 1ex;
+    padding: 10px;
+}
+
+.buttons-container {
+    display: grid;
+    row-gap: 10px;
+    justify-self: space-between;
+    margin: 10px;
+}
+
+button {
+    width: auto;
+    height: 30px;
+    padding: 10px;
+} 

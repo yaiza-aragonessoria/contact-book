@@ -1,0 +1,30 @@
+.form {
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+input {
+    background-color: rgba(128, 128, 128, 0.164);
+    border: none;
+}
+
+.avatar-container label {
+    background-color: hsla(121, 54%, 45%, 0.5);
+    border: none;
+    border-radius: 1ex;
+    cursor: pointer;
+    width: auto;
+    height: 30px;
+    padding: 10px;
+}
+
+.avatar-container input {
+    visibility: hidden;
+}
