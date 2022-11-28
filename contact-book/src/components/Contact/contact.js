@@ -1,7 +1,8 @@
 import ContactDetails from "../ContactDetails/contact-details";
+import { useState, useEffect } from "react";
 import "./contact.css";
 
-const Contact = ({id, name, avatar, address, species, favColor, isInDetails, handleUpdate, handleDelete, handleIsInDetails, handleContactDetails}) => {
+const Contact = ({id, name, avatar, address, species, favColor, handleUpdate, handleDelete, handleContactDetails}) => {
     const contact = {
         id,
         name,
@@ -9,6 +10,12 @@ const Contact = ({id, name, avatar, address, species, favColor, isInDetails, han
         address,
         species,
         favColor
+    }
+
+    const [isInDetails, setIsInDetails]  = useState(false);
+
+    const handleIsInDetails = () => {
+        setIsInDetails(!isInDetails)
     }
 
     return (

@@ -59,7 +59,7 @@ const ContactBook = () => {
       });
     const [isEditing, setIsEditing] = useState(false);
     const [isAdding, setIsAdding]  = useState(false);
-    const [isInDetails, setIsInDetails]  = useState(false);
+    
 
 
     const handleSubmit = e => {
@@ -129,10 +129,6 @@ const ContactBook = () => {
         setIsAdding(!isAdding);
         }
 
-    const handleIsInDetails = () => {
-        setIsInDetails(!isInDetails)
-    }
-
     return (
         <>
         <div className="add-container">
@@ -156,8 +152,6 @@ const ContactBook = () => {
                             handleContactDetails={handleContactDetails}
                             handleDelete={handleDelete}
                             handleUpdate={handleUpdate}
-                            isInDetails={isInDetails}
-                            handleIsInDetails={handleIsInDetails}
                     />
                 );
             })
